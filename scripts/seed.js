@@ -12,10 +12,10 @@ mongoose.connect(mongoURI)
     // Function to seed the database with sample data
     async function seedDatabase() {
       try {
-        //Clear existing data before seeding {To be removed after video made}
-        await User.deleteMany();
-        await Thought.deleteMany();
-        await Reaction.deleteMany();
+        //Clear existing data before seeding {uncomment to use}
+        //await User.deleteMany();
+        //await Thought.deleteMany();
+        //await Reaction.deleteMany();
 
         // Sample users data
         const sampleUsers = [

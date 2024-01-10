@@ -1,19 +1,15 @@
 # MongooseMindMap
 
-### Walkthrough Video: 37%
+A basic social media API
 
-* A walkthrough video that demonstrates the functionality of the social media API must be submitted, and a link to the video should be included in your README file.
+## Description
 
-  * The walkthrough video must show all of the technical acceptance criteria being met.
+This project was to work with NoSQL and MongoDB via Mongoose and Express.js to showcasee my knowledge and skill, it was a great oppertunity to apply what I have learned recently and put it to work. It feels very similar yet different to the MySQL stuff that I have written, but I can see where each have their advantages and disadvantages now that I have been able to use both. I am excited to use this new skill moving forwards with a few other projects and will likely look back at this project to remind myself of what I have done and what I can do when I put my mind to it. I don't think I particularly struggled anywhere on this project there was of course a few debugging that had to go on but overall it was smooth sailing things went in pretty easily and any time I was stuck I was able to refer to my resources and get through it.
 
-  * The walkthrough video must demonstrate how to start the application’s server.
+## Installation
 
-  * The walkthrough video must demonstrate GET routes for all users and all thoughts being tested in Insomnia.
+If you would like to clone this repo and use the API that I have built out you will first need to make sure you have MongoDB setup as well as other things like vsCode and a terminal. Once you have cloned the Repo and have Cd'd into it. Make sure your connection points are correct four your machine and then run NPM start and it should be interactable via Insomnia. 
 
-  * The walkthrough video must demonstrate GET routes for a single user and a single thought being tested in Insomnia.
+Here is an example video showing all the commands available on MongooseMindMap:
 
-  * The walkthrough video must demonstrate POST, PUT, and DELETE routes for users and thoughts being tested in Insomnia.
-
-  * Walkthrough video must demonstrate POST and DELETE routes for a user’s friend list being tested in Insomnia.
-
-  * Walkthrough video must demonstrate POST and DELETE routes for reactions to thoughts being tested in Insomnia.
+- [Walkthrough Video Here](https://www.youtube.com/watch?v=wBqaDHDaTxE)
