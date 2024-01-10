@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
     }
   });
 
-  // POST a new user
+// POST a new user
 router.post('/', async (req, res) => {
     try {
       const userData = req.body;
@@ -38,7 +38,33 @@ router.post('/', async (req, res) => {
     }
   });
 
-  // PUT to update a user by _id
+// POST to add a new friend to a user's friend list
+router.post('/:userId/friends/:friendId', async (req, res) => {
+  try {
+      const userId = req.params.userId;
+      const friendId = req.params.friendId;
+
+      // Check if the user and friend exist
+      const user = await User.findById(userId);
+      const friend = await User.findById(friendId);
+
+      if (!user || !friend) {
+          return res.status(404).json({ message: 'User or friend not found' });
+      }
+
+      // Add the friend to the user's friend list
+      user.friends.push(friendId);
+      await user.save();
+
+      console.log(`Friend with ID: ${friendId} has been added to the friend list of user with ID: ${userId}`);
+      res.json({ message: 'Friend added' });
+  } catch (err) {
+      console.error(`Error adding friend to user's friend list: ${err}`);
+      res.status(500).json(err);
+  }
+});
+
+// PUT to update a user by _id
 router.put('/:id', async (req, res) => {
     try {
       const userId = req.params.id;
