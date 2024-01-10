@@ -50,4 +50,19 @@ router.post('/', async (req, res) => {
   }
 });
 
+// PUT to update a thought by its _id
+router.put('/:id', async (req, res) => {
+  try {
+    const thoughtId = req.params.id;
+    const thoughtData = req.body;
+    const updatedThought = await Thought.findByIdAndUpdate(thoughtId, thoughtData, { new: true });
+    if (!updatedThought) {
+      return res.status(404).json({ message: 'Thought not found' });
+    }
+    res.json(updatedThought);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 module.exports = router;
