@@ -12,7 +12,7 @@ mongoose.connect(mongoURI)
     // Function to seed the database with sample data
     async function seedDatabase() {
       try {
-        //Clear existing data before seeding
+        //Clear existing data before seeding {To be removed after video made}
         await User.deleteMany();
         await Thought.deleteMany();
         await Reaction.deleteMany();
