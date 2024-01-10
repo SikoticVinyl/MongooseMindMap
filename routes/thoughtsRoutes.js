@@ -65,4 +65,27 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// DELETE to remove a thought by its _id
+router.delete('/:id', async (req, res) => {
+  try {
+    const thoughtId = req.params.id;
+    const thought = await Thought.findById(thoughtId);
+    if (!thought) {
+      return res.status(404).json({ message: 'Thought not found' });
+    }
+
+    // Remove the thought from the user's thoughts array
+    const userId = thought.userId;
+    await User.findByIdAndUpdate(userId, { $pull: { thoughts: thoughtId } });
+
+    // Delete the thought using .deleteOne
+    await Thought.deleteOne({ _id: thoughtId });
+
+    res.json({ message: 'Thought removed' });
+  } catch (err) {
+    console.error(`Error during deletion of thought with ID: ${thoughtId}`, err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
