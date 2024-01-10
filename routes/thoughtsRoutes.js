@@ -108,4 +108,23 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// DELETE to pull and remove a reaction by the reaction's reactionId value
+router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
+  try {
+    const thoughtId = req.params.thoughtId;
+    const reactionId = req.params.reactionId;
+
+    // Pull and remove the reaction from the thought's reactions array field
+    await Thought.findByIdAndUpdate(thoughtId, { $pull: { reactions: reactionId } });
+
+    // Delete the reaction using .deleteOne
+    await Reaction.deleteOne({ _id: reactionId });
+
+    res.json({ message: 'Reaction removed' });
+  } catch (err) {
+    console.error(`Error during deletion of reaction with ID: ${reactionId}`, err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
