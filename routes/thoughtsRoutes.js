@@ -50,6 +50,26 @@ router.post('/', async (req, res) => {
   }
 });
 
+// POST to create a reaction stored in a single thought's reactions array field
+router.post('/:thoughtId/reactions', async (req, res) => {
+  try {
+    const thoughtId = req.params.thoughtId;
+    const reactionData = req.body;
+
+    // Create the reaction and get its _id
+    const newReaction = await Reaction.create(reactionData);
+    const reactionId = newReaction._id;
+
+    // Push the reaction's _id to the thought's reactions array field
+    await Thought.findByIdAndUpdate(thoughtId, { $push: { reactions: reactionId } });
+
+    res.status(201).json(newReaction);
+  } catch (err) {
+    console.error('Error creating reaction:', err.message);
+    res.status(400).json(err);
+  }
+});
+
 // PUT to update a thought by its _id
 router.put('/:id', async (req, res) => {
   try {
