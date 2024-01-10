@@ -12,7 +12,7 @@ mongoose.connect(mongoURI)
     // Function to seed the database with sample data
     async function seedDatabase() {
       try {
-        // Clear existing data before seeding (optional - only here for testing REMOVE LATER)
+        //Clear existing data before seeding
         await User.deleteMany();
         await Thought.deleteMany();
         await Reaction.deleteMany();
@@ -23,6 +23,9 @@ mongoose.connect(mongoURI)
           { username: 'user2', email: 'user2@example.com' },
         ];
 
+        // Create users
+        const createdUsers = await User.create(sampleUsers);
+
         // Sample thoughts data
         const sampleThoughts = [
           { thoughtText: 'This is a thought by user1', username: 'user1' },
@@ -30,17 +33,21 @@ mongoose.connect(mongoURI)
           { thoughtText: 'Thought by user2', username: 'user2' },
         ];
 
-        // Create users
-        const createdUsers = await User.create(sampleUsers);
-
         // Create thoughts linked to users
         const thoughtsWithUsers = sampleThoughts.map(thought => {
-          const user = createdUsers.find(user => user.username === thought.username);
-          thought.userId = user._id;
+          const user = createdUsers.find(u => u.username === thought.username);
+          thought.username = user.username;
           return thought;
         });
 
         const createdThoughts = await Thought.create(thoughtsWithUsers);
+
+        // Update each user with the created thoughts
+        for (const user of createdUsers) {
+          const userThoughts = createdThoughts.filter(thought => thought.username === user.username);
+          user.thoughts = userThoughts.map(thought => thought._id);
+          await user.save();
+        }
 
         // Sample reactions data
         const sampleReactions = [
