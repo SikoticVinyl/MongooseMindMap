@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/socialNetworkDB', {
+mongoose.connect('mongodb://localhost/MongooseMindDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
