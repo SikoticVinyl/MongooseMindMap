@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Thought = require('../models/Thought');
 
 // GET all users
 router.get('/', async (req, res) => {
@@ -52,23 +53,26 @@ router.put('/:id', async (req, res) => {
     }
   });
 
-  // DELETE to remove user by _id
+// DELETE to remove user by _id
 router.delete('/:id', async (req, res) => {
+    let userId = null;
     try {
-      const userId = req.params.id;
+      userId = req.params.id;
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
       
-      // Optionally remove associated thoughts
-      if (user.thoughts.length > 0) {
-        await Thought.deleteMany({ _id: { $in: user.thoughts } });
-      }
+      // Delete thoughts related to the user
+      await Thought.deleteMany({ userId: userId });
       
-      await user.remove();
-      res.json({ message: 'User and associated thoughts removed' });
+      // Remove the user
+      await User.deleteOne({ _id: userId });
+  
+      console.log(`User with ID: ${userId} and related thoughts have been successfully removed`);
+      res.json({ message: 'User and related thoughts removed' });
     } catch (err) {
+      console.error(`Error during deletion of user with ID: ${userId}`, err);
       res.status(500).json(err);
     }
   });
