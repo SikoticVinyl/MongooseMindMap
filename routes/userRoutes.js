@@ -26,4 +26,15 @@ router.get('/:id', async (req, res) => {
     }
   });
 
+  // POST a new user
+router.post('/', async (req, res) => {
+    try {
+      const userData = req.body;
+      const newUser = await User.create(userData);
+      res.status(201).json(newUser);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+
 module.exports = router;
